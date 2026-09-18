@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Iraa - Personal AI Assistant</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css?v=30"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     AUTHENTICATION SCREEN
+========================================================= -->
+
+<div id="auth-screen" class="auth-screen">
+
+
+    <!-- =====================================================
+         LEFT BRANDING SECTION
+    ====================================================== -->
+
+    <section class="auth-brand">
+
+
+        <div class="brand-logo">
+
+            <div class="brand-logo-icon">
+                ✦
+            </div>
+
+            <span>I R A A</span>
+
+        </div>
+
+
+        <div class="brand-eyebrow">
+            YOUR PERSONAL AI COMPANION
+        </div>
+
+
+        <h1 class="brand-title">
+
+            <span>Meet</span>
+
+            <span class="brand-gradient">
+                Iraa
+            </span>
+
+        </h1>
+
+
+        <p class="brand-description">
+
+            Your personal AI assistant for thinking,
+            learning, planning, creating and getting
+            things done.
+
+        </p>
+
+
+        <div class="brand-line"></div>
+
+
+        <div class="brand-features">
+
+
+            <div class="feature-item">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Chat
+                    </strong>
+
+                    <span>
+                        Intelligent conversations
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Remember
+                    </strong>
+
+                    <span>
+                        Built around your context
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Productivity
+                    </strong>
+
+                    <span>
+                        Turn ideas into action
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature-item">
+
+                <div class="feature-icon">
+                    🔐
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Personal
+                    </strong>
+
+                    <span>
+                        Your private workspace
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="brand-quote">
+
+            <div class="quote-mark">
+                “
+            </div>
+
+            <p>
+                A smarter assistant for
+                <br>
+                a better tomorrow.
+            </p>
+
+            <span>
+                — Iraa
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RIGHT AUTH CONTAINER
+    ====================================================== -->
+
+    <section class="auth-container">
+
+
+        <div class="auth-card">
+
+
+            <!-- =================================================
+                 LOGIN / SIGNUP TABS
+            ================================================== -->
+
+            <div class="auth-tabs">
+
+                <button
+                    id="login-tab"
+                    class="auth-tab active"
+                    type="button"
+                >
+                    Login
+                </button>
+
+
+                <button
+                    id="signup-tab"
+                    class="auth-tab"
+                    type="button"
+                >
+                    Sign Up
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AUTH MESSAGE
+            ================================================== -->
+
+            <div
+                id="auth-message"
+                class="auth-message"
+            ></div>
+
+
+
+            <!-- =================================================
+                 LOGIN FORM
+            ================================================== -->
+
+            <div
+                id="login-form"
+                class="auth-form"
+                style="display: block;"
+            >
+
+
+                <div class="auth-heading">
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+                    <p>
+                        Sign in to continue to Iraa
+                    </p>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="field">
+
+                    <label for="login-email">
+                        Email
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="login-email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+
+                    <label for="login-password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="login-password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('login-password', this)"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- REMEMBER / FORGOT -->
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            id="remember-me"
+                        >
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        id="forgot-password"
+                        class="forgot-password"
+                    >
+                        Forgot password?
+                    </button>
+
+                </div>
+
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    id="login-btn"
+                    class="login-button"
+                    type="button"
+                >
+
+                    <span>
+                        Login
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+
+                <!-- DIVIDER -->
+
+                <div class="auth-divider">
+
+                    <span></span>
+
+                    <p>
+                        OR
+                    </p>
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SOCIAL LOGIN
+                ================================================== -->
+
+                <div class="social-login-group">
+
+
+                    <!-- GOOGLE -->
+
+                    <button
+                        type="button"
+                        id="google-login"
+                        class="social-login"
+                    >
+
+                        <span class="social-icon google-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    fill="#4285F4"
+                                    d="M21.35 12.2c0-.7-.06-1.38-.18-2H12v3.79h5.23a4.47 4.47 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.92-4.18 2.92-7.18z"
+                                />
+
+                                <path
+                                    fill="#34A853"
+                                    d="M12 21.75c2.63 0 4.84-.87 6.45-2.37l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.75 9.75 0 0 0 12 21.75z"
+                                />
+
+                                <path
+                                    fill="#FBBC05"
+                                    d="M6.54 13.82A5.86 5.86 0 0 1 6.23 12c0-.63.11-1.24.31-1.82V7.65H3.3A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.05 4.35l3.24-2.53z"
+                                />
+
+                                <path
+                                    fill="#EA4335"
+                                    d="M12 6.15c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.25 14.63 2.25 12 2.25A9.75 9.75 0 0 0 3.3 7.65l3.24 2.53C7.31 7.87 9.46 6.15 12 6.15z"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span class="social-text">
+                            Continue with Google
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- GITHUB -->
+
+                    <button
+                        type="button"
+                        id="github-login"
+                        class="social-login"
+                    >
+
+                        <span class="social-icon github-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+
+                                <path
+                                    fill="currentColor"
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55v-2.14c-3.2.7-3.87-1.35-3.87-1.35-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.03 1.75 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.35.78 1.04.78 2.1v3.11c0 .3.21.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                                />
+
+                            </svg>
+
+                        </span>
+
+                        <span class="social-text">
+                            Continue with GitHub
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- SIGNUP LINK -->
+
+                <div class="auth-bottom-text">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <button
+                        type="button"
+                        id="show-signup"
+                        class="auth-link"
+                    >
+                        Sign up
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SIGNUP FORM
+            ================================================== -->
+
+            <div
+                id="signup-form"
+                class="auth-form"
+                style="display: none;"
+            >
+
+
+                <div class="auth-heading">
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Start your journey with Iraa
+                    </p>
+
+                </div>
+
+
+
+                <!-- NAME -->
+
+                <div class="field">
+
+                    <label for="signup-name">
+                        Name
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="signup-name"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="field">
+
+                    <label for="signup-email">
+                        Email
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="signup-email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="field">
+
+                    <label for="signup-password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="signup-password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('signup-password', this)"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="field">
+
+                    <label for="signup-confirm-password">
+                        Confirm password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="field-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="signup-confirm-password"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SIGNUP BUTTON -->
+
+                <button
+                    id="signup-btn"
+                    class="login-button"
+                    type="button"
+                >
+
+                    <span>
+                        Create account
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="auth-bottom-text">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <button
+                        type="button"
+                        id="show-login"
+                        class="auth-link"
+                    >
+                        Login
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN IRAA APPLICATION
+========================================================= -->
+
+<div
+    id="app"
+    class="app"
+    style="display: none;"
+>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="topbar-left">
+
+            <div class="app-logo">
+                ✦
+            </div>
+
+            <div>
+
+                <h2>
+                    Iraa
+                </h2>
+
+                <span>
+                    Your personal AI assistant
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span
+                id="current-user"
+                class="current-user"
+            ></span>
+
+
+            <button
+                id="memory-btn"
+                class="memory-button"
+                type="button"
+            >
+                🧠 Memory
+            </button>
+
+
+            <button
+                id="logout-btn"
+                class="logout-button"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CHAT AREA
+    ====================================================== -->
+
+    <main
+        id="chat-container"
+        class="chat-container"
+    >
+
+        <div
+            id="messages"
+            class="messages"
+        ></div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         CHAT INPUT
+    ====================================================== -->
+
+    <div class="chat-input-area">
+
+        <input
+            type="text"
+            id="message-input"
+            placeholder="Message your assistant..."
+            autocomplete="off"
+        >
+
+
+        <button
+            id="send-btn"
+            class="send-button"
+            type="button"
+        >
+            Send
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MEMORY PANEL
+    ====================================================== -->
+
+    <div
+        id="memory-panel"
+        class="memory-panel"
+    >
+
+
+        <div class="memory-header">
+
+            <div>
+
+                <h2>
+                    🧠 Memory
+                </h2>
+
+                <p>
+                    What Iraa remembers about you
+                </p>
+
+            </div>
+
+
+            <button
+                id="close-memory"
+                class="close-memory"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="memory-list"
+            class="memory-list"
+        ></div>
+
+
+        <button
+            id="clear-memories"
+            class="clear-memories"
+            type="button"
+        >
+            Clear all memories
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         OVERLAY
+    ====================================================== -->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     SCRIPTS
+========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<script
+    src="/static/supabase-config.js?v=30"
+></script>
+
+
+<script
+    src="/static/script.js?v=30"
+></script>
+
+
+</body>
+
+</html>

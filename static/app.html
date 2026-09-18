@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Iraa — Personal AI Assistant</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/app.css?v=1"
+    >
+
+</head>
+
+<body>
+
+<div id="app" class="app">
+
+    <header class="topbar">
+
+        <div class="topbar-left">
+
+            <div class="app-logo">
+                ✦
+            </div>
+
+            <div>
+                <h1>Iraa</h1>
+                <p>Your personal AI assistant</p>
+            </div>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <span
+                id="current-user"
+                class="current-user"
+            ></span>
+
+            <button
+                id="memory-btn"
+                class="top-button"
+                type="button"
+            >
+                🧠 Memory
+            </button>
+
+            <button
+                id="logout-btn"
+                class="top-button logout"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="workspace">
+
+        <section
+            id="chat-container"
+            class="chat-container"
+        >
+
+            <div
+                id="welcome"
+                class="welcome"
+            >
+
+                <div class="welcome-logo">
+                    ✦
+                </div>
+
+                <h2>
+                    Hello, I'm Iraa.
+                </h2>
+
+                <p>
+                    Your personal AI assistant.
+                    What would you like to work on?
+                </p>
+
+            </div>
+
+            <div
+                id="messages"
+                class="messages"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <div class="chat-input-area">
+
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="message-input"
+                placeholder="Message Iraa..."
+                autocomplete="off"
+            >
+
+            <button
+                id="send-btn"
+                type="button"
+            >
+                <span>Send</span>
+                <span>→</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+    <aside
+        id="memory-panel"
+        class="memory-panel"
+    >
+
+        <div class="memory-header">
+
+            <div>
+                <h2>🧠 Memory</h2>
+                <p>What Iraa remembers about you</p>
+            </div>
+
+            <button
+                id="close-memory"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div
+            id="memory-list"
+            class="memory-list"
+        ></div>
+
+        <button
+            id="clear-memories"
+            class="clear-memories"
+            type="button"
+        >
+            Clear all memories
+        </button>
+
+    </aside>
+
+</div>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script
+    src="/static/supabase-config.js?v=31"
+></script>
+
+<script
+    src="/static/app.js?v=4"
+></script>
+
+</body>
+
+</html>
