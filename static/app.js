@@ -77,9 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 chatContainer.scrollTo({
                     top: chatContainer.scrollHeight,
-                    behavior: smooth
-                        ? "smooth"
-                        : "auto"
+                    behavior: smooth ? "smooth" : "auto"
                 });
 
                 setTimeout(() => {
@@ -102,14 +100,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     let session = null;
     let user = null;
 
-
     try {
 
         const {
             data,
             error
-        } =
-            await supabaseClient.auth.getSession();
+        } = await supabaseClient.auth.getSession();
 
 
         if (
@@ -127,11 +123,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        session =
-            data.session;
-
-        user =
-            session.user;
+        session = data.session;
+        user = session.user;
 
 
         console.log(
@@ -157,9 +150,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (currentUser) {
-
-            currentUser.textContent =
-                name;
+            currentUser.textContent = name;
         }
 
 
@@ -185,8 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const {
             data,
             error
-        } =
-            await supabaseClient.auth.getSession();
+        } = await supabaseClient.auth.getSession();
 
 
         if (
@@ -222,7 +212,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ) {
 
         if (!messagesEl) {
-            return;
+            return null;
         }
 
 
@@ -260,28 +250,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             content;
 
 
-        message.appendChild(
-            label
-        );
+        message.appendChild(label);
+        message.appendChild(text);
 
-        message.appendChild(
-            text
-        );
-
-
-        messagesEl.appendChild(
-            message
-        );
+        messagesEl.appendChild(message);
 
 
         if (welcomeEl) {
-
-            welcomeEl.style.display =
-                "none";
+            welcomeEl.style.display = "none";
         }
 
 
         scrollToLatest(true);
+
+        return message;
     }
 
 
@@ -289,17 +271,14 @@ document.addEventListener("DOMContentLoaded", async () => {
        RENDER CONVERSATION
        ===================================================== */
 
-    function renderConversation(
-        messages
-    ) {
+    function renderConversation(messages) {
 
         if (!messagesEl) {
             return;
         }
 
 
-        messagesEl.innerHTML =
-            "";
+        messagesEl.innerHTML = "";
 
 
         if (
@@ -308,9 +287,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ) {
 
             if (welcomeEl) {
-
-                welcomeEl.style.display =
-                    "flex";
+                welcomeEl.style.display = "flex";
             }
 
             return;
@@ -318,9 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (welcomeEl) {
-
-            welcomeEl.style.display =
-                "none";
+            welcomeEl.style.display = "none";
         }
 
 
@@ -368,18 +343,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 item.content;
 
 
-            message.appendChild(
-                label
-            );
+            message.appendChild(label);
+            message.appendChild(text);
 
-            message.appendChild(
-                text
-            );
-
-
-            messagesEl.appendChild(
-                message
-            );
+            messagesEl.appendChild(message);
 
         });
 
@@ -409,9 +376,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/memory",
                     {
                         method: "GET",
-
-                        headers:
-                            await getAuthHeaders()
+                        headers: await getAuthHeaders()
                     }
                 );
 
@@ -477,16 +442,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (messageInput) {
-
-            messageInput.disabled =
-                true;
+            messageInput.disabled = true;
         }
 
 
         if (sendButton) {
-
-            sendButton.disabled =
-                true;
+            sendButton.disabled = true;
         }
 
 
@@ -501,14 +462,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (messageInput) {
-
-            messageInput.value =
-                "";
+            messageInput.value = "";
         }
 
 
         /* =================================================
-           THINKING
+           THINKING MESSAGE
            ================================================= */
 
         const thinking =
@@ -543,19 +502,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             "Thinking...";
 
 
-        thinking.appendChild(
-            thinkingLabel
-        );
+        thinking.appendChild(thinkingLabel);
+        thinking.appendChild(thinkingText);
 
-        thinking.appendChild(
-            thinkingText
-        );
-
-
-        messagesEl.appendChild(
-            thinking
-        );
-
+        messagesEl.appendChild(thinking);
 
         scrollToLatest(true);
 
@@ -566,81 +516,144 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
 
+            const headers =
+                await getAuthHeaders();
+
+
             const response =
                 await fetch(
                     "/chat",
                     {
-
-                        method:
-                            "POST",
-
-                        headers:
-                            await getAuthHeaders(),
-
-                        body:
-                            JSON.stringify({
-                                message:
-                                    message
-                            })
-
+                        method: "POST",
+                        headers: headers,
+                        body: JSON.stringify({
+                            message: message
+                        })
                     }
                 );
 
 
-            let data = {};
+            console.log(
+                "Iraa: /chat status:",
+                response.status
+            );
 
+
+            /* =================================================
+               READ RESPONSE SAFELY
+               ================================================= */
+
+            const rawResponse =
+                await response.text();
+
+
+            console.log(
+                "Iraa: /chat raw response:",
+                rawResponse
+            );
+
+
+            let data = {};
 
             try {
 
                 data =
-                    await response.json();
+                    JSON.parse(rawResponse);
 
-            } catch {
+            } catch (parseError) {
 
-                data = {};
+                console.error(
+                    "Iraa: Invalid JSON from /chat:",
+                    parseError
+                );
+
             }
 
 
-            thinking.remove();
+            /* =================================================
+               AUTH ERROR
+               ================================================= */
 
+            if (response.status === 401) {
+
+                thinking.remove();
+
+                window.location.href = "/";
+
+                return;
+            }
+
+
+            /* =================================================
+               SERVER ERROR
+               ================================================= */
 
             if (!response.ok) {
 
-                if (
-                    response.status === 401
-                ) {
-
-                    window.location.href =
-                        "/";
-
-                    return;
-                }
-
+                const errorMessage =
+                    data.detail ||
+                    data.error ||
+                    data.response ||
+                    data.reply ||
+                    "Unable to get a response.";
 
                 throw new Error(
-                    data.reply ||
-                    data.error ||
-                    "Unable to get a response."
+                    errorMessage
                 );
             }
 
 
             /* =================================================
-               IRAA RESPONSE
+               IMPORTANT:
+               BACKEND RETURNS `response`
+               NOT `reply`
                ================================================= */
 
-            addMessage(
-                "assistant",
+            const assistantResponse =
+                data.response ||
                 data.reply ||
-                "I couldn't generate a response."
+                data.message ||
+                data.answer;
+
+
+            console.log(
+                "Iraa: Parsed response:",
+                assistantResponse
             );
 
 
-            setTimeout(() => {
+            /* =================================================
+               NO RESPONSE
+               ================================================= */
 
-                scrollToLatest(true);
+            if (!assistantResponse) {
 
-            }, 50);
+                console.error(
+                    "Iraa: Backend returned no assistant response.",
+                    data
+                );
+
+                thinkingText.textContent =
+                    "I couldn't generate a response. Please try again.";
+
+                return;
+            }
+
+
+            /* =================================================
+               REPLACE THINKING MESSAGE
+               ================================================= */
+
+            thinking.classList.remove(
+                "thinking"
+            );
+
+
+            thinkingText.textContent =
+                assistantResponse;
+
+
+            scrollToLatest(true);
 
 
         } catch (error) {
@@ -651,33 +664,30 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-            thinking.remove();
+            if (thinking) {
 
+                thinkingText.textContent =
+                    error.message ||
+                    "Something went wrong. Please try again.";
 
-            addMessage(
-                "assistant",
-                error.message ||
-                "Something went wrong. Please try again."
-            );
+                thinking.classList.remove(
+                    "thinking"
+                );
+            }
 
 
         } finally {
 
-            sending =
-                false;
+            sending = false;
 
 
             if (messageInput) {
-
-                messageInput.disabled =
-                    false;
+                messageInput.disabled = false;
             }
 
 
             if (sendButton) {
-
-                sendButton.disabled =
-                    false;
+                sendButton.disabled = false;
             }
 
 
@@ -685,9 +695,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             setTimeout(() => {
-
                 scrollToLatest(true);
-
             }, 100);
 
         }
@@ -752,25 +760,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/memories",
                     {
                         method: "GET",
-
-                        headers:
-                            await getAuthHeaders()
+                        headers: await getAuthHeaders()
                     }
                 );
 
 
             if (!response.ok) {
 
-                if (
-                    response.status === 401
-                ) {
+                if (response.status === 401) {
 
-                    window.location.href =
-                        "/";
+                    window.location.href = "/";
 
                     return;
                 }
-
 
                 throw new Error(
                     "Unable to load memories."
@@ -786,8 +788,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 data.memories || [];
 
 
-            memoryList.innerHTML =
-                "";
+            memoryList.innerHTML = "";
 
 
             if (
@@ -842,28 +843,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 remove.addEventListener(
                     "click",
                     () => {
-
-                        deleteMemory(
-                            item.id
-                        );
-
+                        deleteMemory(item.id);
                     }
                 );
 
 
-                card.appendChild(
-                    text
-                );
+                card.appendChild(text);
+                card.appendChild(remove);
 
-
-                card.appendChild(
-                    remove
-                );
-
-
-                memoryList.appendChild(
-                    card
-                );
+                memoryList.appendChild(card);
 
             });
 
@@ -891,9 +879,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        DELETE MEMORY
        ===================================================== */
 
-    async function deleteMemory(
-        id
-    ) {
+    async function deleteMemory(id) {
 
         try {
 
@@ -901,13 +887,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await fetch(
                     `/memories/${id}`,
                     {
-
-                        method:
-                            "DELETE",
-
-                        headers:
-                            await getAuthHeaders()
-
+                        method: "DELETE",
+                        headers: await getAuthHeaders()
                     }
                 );
 
@@ -957,13 +938,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 await fetch(
                     "/memories",
                     {
-
-                        method:
-                            "DELETE",
-
-                        headers:
-                            await getAuthHeaders()
-
+                        method: "DELETE",
+                        headers: await getAuthHeaders()
                     }
                 );
 
@@ -996,13 +972,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function openMemory() {
 
-        memoryPanel?.classList.add(
-            "open"
-        );
+        memoryPanel?.classList.add("open");
 
-        overlay?.classList.add(
-            "show"
-        );
+        overlay?.classList.add("show");
 
         loadMemories();
     }
@@ -1010,13 +982,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function closeMemoryPanel() {
 
-        memoryPanel?.classList.remove(
-            "open"
-        );
+        memoryPanel?.classList.remove("open");
 
-        overlay?.classList.remove(
-            "show"
-        );
+        overlay?.classList.remove("show");
     }
 
 
@@ -1052,17 +1020,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         "click",
         async () => {
 
-            logoutButton.disabled =
-                true;
-
+            logoutButton.disabled = true;
 
             try {
 
                 const {
                     error
                 } =
-                    await supabaseClient.auth
-                        .signOut();
+                    await supabaseClient.auth.signOut();
 
 
                 if (error) {
@@ -1070,8 +1035,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-                window.location.href =
-                    "/";
+                window.location.href = "/";
 
 
             } catch (error) {
@@ -1081,9 +1045,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     error
                 );
 
-
-                logoutButton.disabled =
-                    false;
+                logoutButton.disabled = false;
             }
 
         }
@@ -1108,8 +1070,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 !session
             ) {
 
-                window.location.href =
-                    "/";
+                window.location.href = "/";
             }
 
         }
@@ -1122,9 +1083,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadConversation();
 
-
     messageInput?.focus();
-
 
     console.log(
         "Iraa: Chat system ready."
