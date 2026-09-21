@@ -1,6 +1,7 @@
 /* =========================================================
    IRAA — APPLICATION PAGE
    User-specific Chat + Memory + Logout + Auto Scroll
+   V1 Voice Integration
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -12,7 +13,11 @@ document.addEventListener("DOMContentLoaded", async () => {
        ===================================================== */
 
     if (typeof supabaseClient === "undefined") {
-        console.error("Iraa: Supabase client is missing.");
+
+        console.error(
+            "Iraa: Supabase client is missing."
+        );
+
         return;
     }
 
@@ -35,6 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const sendButton =
         document.getElementById("send-btn");
+
+    const voiceButton =
+        document.getElementById("voice-btn");
 
     const currentUser =
         document.getElementById("current-user");
@@ -62,23 +70,53 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /* =====================================================
+       VOICE
+       ===================================================== */
+
+    if (voiceButton) {
+
+        console.log(
+            "Iraa V1: Voice button found."
+        );
+
+    } else {
+
+        console.warn(
+            "Iraa V1: Voice button not found."
+        );
+
+    }
+
+
+    /* =====================================================
        AUTO SCROLL
        ===================================================== */
 
-    function scrollToLatest(smooth = true) {
+    function scrollToLatest(
+        smooth = true
+    ) {
 
         if (!chatContainer) {
             return;
         }
+
 
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
 
                 chatContainer.scrollTo({
-                    top: chatContainer.scrollHeight,
-                    behavior: smooth ? "smooth" : "auto"
+
+                    top:
+                        chatContainer.scrollHeight,
+
+                    behavior:
+                        smooth
+                            ? "smooth"
+                            : "auto"
+
                 });
+
 
                 setTimeout(() => {
 
@@ -90,6 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
         });
+
     }
 
 
@@ -98,14 +137,17 @@ document.addEventListener("DOMContentLoaded", async () => {
        ===================================================== */
 
     let session = null;
+
     let user = null;
+
 
     try {
 
         const {
             data,
             error
-        } = await supabaseClient.auth.getSession();
+        } =
+            await supabaseClient.auth.getSession();
 
 
         if (
@@ -123,14 +165,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        session = data.session;
-        user = session.user;
+        session =
+            data.session;
+
+        user =
+            session.user;
 
 
         console.log(
             "Iraa: Authenticated as:",
             user.email
         );
+
 
         console.log(
             "Iraa: Supabase User ID:",
@@ -150,7 +196,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (currentUser) {
-            currentUser.textContent = name;
+
+            currentUser.textContent =
+                name;
+
         }
 
 
@@ -176,7 +225,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const {
             data,
             error
-        } = await supabaseClient.auth.getSession();
+        } =
+            await supabaseClient.auth.getSession();
 
 
         if (
@@ -199,6 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `Bearer ${data.session.access_token}`
 
         };
+
     }
 
 
@@ -251,17 +302,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         message.appendChild(label);
+
         message.appendChild(text);
 
         messagesEl.appendChild(message);
 
 
         if (welcomeEl) {
-            welcomeEl.style.display = "none";
+
+            welcomeEl.style.display =
+                "none";
+
         }
 
 
         scrollToLatest(true);
+
 
         return message;
     }
@@ -271,14 +327,17 @@ document.addEventListener("DOMContentLoaded", async () => {
        RENDER CONVERSATION
        ===================================================== */
 
-    function renderConversation(messages) {
+    function renderConversation(
+        messages
+    ) {
 
         if (!messagesEl) {
             return;
         }
 
 
-        messagesEl.innerHTML = "";
+        messagesEl.innerHTML =
+            "";
 
 
         if (
@@ -287,7 +346,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         ) {
 
             if (welcomeEl) {
-                welcomeEl.style.display = "flex";
+
+                welcomeEl.style.display =
+                    "flex";
+
             }
 
             return;
@@ -295,60 +357,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (welcomeEl) {
-            welcomeEl.style.display = "none";
+
+            welcomeEl.style.display =
+                "none";
+
         }
 
 
-        messages.forEach(item => {
+        messages.forEach(
+            item => {
 
-            if (
-                item.role !== "user" &&
-                item.role !== "assistant"
-            ) {
-                return;
+                if (
+                    item.role !== "user" &&
+                    item.role !== "assistant"
+                ) {
+
+                    return;
+                }
+
+
+                const message =
+                    document.createElement("div");
+
+
+                message.className =
+                    `message ${item.role}-message`;
+
+
+                const label =
+                    document.createElement("div");
+
+
+                label.className =
+                    "message-label";
+
+
+                label.textContent =
+                    item.role === "user"
+                        ? "You"
+                        : "Iraa";
+
+
+                const text =
+                    document.createElement("div");
+
+
+                text.className =
+                    "message-content";
+
+
+                text.textContent =
+                    item.content;
+
+
+                message.appendChild(label);
+
+                message.appendChild(text);
+
+                messagesEl.appendChild(message);
+
             }
-
-
-            const message =
-                document.createElement("div");
-
-
-            message.className =
-                `message ${item.role}-message`;
-
-
-            const label =
-                document.createElement("div");
-
-
-            label.className =
-                "message-label";
-
-
-            label.textContent =
-                item.role === "user"
-                    ? "You"
-                    : "Iraa";
-
-
-            const text =
-                document.createElement("div");
-
-
-            text.className =
-                "message-content";
-
-
-            text.textContent =
-                item.content;
-
-
-            message.appendChild(label);
-            message.appendChild(text);
-
-            messagesEl.appendChild(message);
-
-        });
+        );
 
 
         requestAnimationFrame(() => {
@@ -360,6 +429,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
 
         });
+
     }
 
 
@@ -376,19 +446,24 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/memory",
                     {
                         method: "GET",
-                        headers: await getAuthHeaders()
+                        headers:
+                            await getAuthHeaders()
                     }
                 );
 
 
             if (!response.ok) {
 
-                if (response.status === 401) {
+                if (
+                    response.status === 401
+                ) {
 
-                    window.location.href = "/";
+                    window.location.href =
+                        "/";
 
                     return;
                 }
+
 
                 throw new Error(
                     "Unable to load conversation."
@@ -411,7 +486,54 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Iraa: Conversation error:",
                 error
             );
+
         }
+
+    }
+
+
+    /* =====================================================
+       SPEAK ASSISTANT RESPONSE
+       
+       V1:
+       app.js sends the response to voice.js.
+       voice.js handles the actual speech synthesis.
+       ===================================================== */
+
+    function speakAssistantResponse(
+        responseText
+    ) {
+
+        if (
+            !responseText
+        ) {
+
+            return;
+        }
+
+
+        if (
+            typeof window.iraaSpeak !==
+            "function"
+        ) {
+
+            console.log(
+                "Iraa V1: Voice engine not ready."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Iraa V1: Speaking assistant response."
+        );
+
+
+        window.iraaSpeak(
+            responseText
+        );
+
     }
 
 
@@ -419,7 +541,8 @@ document.addEventListener("DOMContentLoaded", async () => {
        SEND MESSAGE
        ===================================================== */
 
-    let sending = false;
+    let sending =
+        false;
 
 
     async function sendMessage() {
@@ -430,7 +553,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         const message =
-            messageInput?.value.trim() || "";
+            messageInput?.value.trim() ||
+            "";
 
 
         if (!message) {
@@ -438,16 +562,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
 
-        sending = true;
+        sending =
+            true;
 
 
         if (messageInput) {
-            messageInput.disabled = true;
+
+            messageInput.disabled =
+                true;
+
         }
 
 
         if (sendButton) {
-            sendButton.disabled = true;
+
+            sendButton.disabled =
+                true;
+
         }
 
 
@@ -462,7 +593,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (messageInput) {
-            messageInput.value = "";
+
+            messageInput.value =
+                "";
+
         }
 
 
@@ -502,10 +636,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             "Thinking...";
 
 
-        thinking.appendChild(thinkingLabel);
-        thinking.appendChild(thinkingText);
+        thinking.appendChild(
+            thinkingLabel
+        );
 
-        messagesEl.appendChild(thinking);
+        thinking.appendChild(
+            thinkingText
+        );
+
+
+        messagesEl.appendChild(
+            thinking
+        );
+
 
         scrollToLatest(true);
 
@@ -527,7 +670,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         method: "POST",
                         headers: headers,
                         body: JSON.stringify({
-                            message: message
+                            message:
+                                message
                         })
                     }
                 );
@@ -553,12 +697,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-            let data = {};
+            let data =
+                {};
+
 
             try {
 
                 data =
-                    JSON.parse(rawResponse);
+                    JSON.parse(
+                        rawResponse
+                    );
 
             } catch (parseError) {
 
@@ -574,11 +722,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                AUTH ERROR
                ================================================= */
 
-            if (response.status === 401) {
+            if (
+                response.status === 401
+            ) {
 
                 thinking.remove();
 
-                window.location.href = "/";
+                window.location.href =
+                    "/";
 
                 return;
             }
@@ -597,16 +748,24 @@ document.addEventListener("DOMContentLoaded", async () => {
                     data.reply ||
                     "Unable to get a response.";
 
+
                 throw new Error(
                     errorMessage
                 );
+
             }
 
 
             /* =================================================
-               IMPORTANT:
-               BACKEND RETURNS `response`
-               NOT `reply`
+               BACKEND RESPONSE
+               
+               Primary:
+               data.response
+
+               Compatibility:
+               data.reply
+               data.message
+               data.answer
                ================================================= */
 
             const assistantResponse =
@@ -626,15 +785,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                NO RESPONSE
                ================================================= */
 
-            if (!assistantResponse) {
+            if (
+                !assistantResponse
+            ) {
 
                 console.error(
                     "Iraa: Backend returned no assistant response.",
                     data
                 );
 
+
                 thinkingText.textContent =
                     "I couldn't generate a response. Please try again.";
+
 
                 return;
             }
@@ -656,6 +819,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             scrollToLatest(true);
 
 
+            /* =================================================
+               V1 VOICE OUTPUT
+               
+               After Iraa's response appears,
+               send it to the voice engine.
+               ================================================= */
+
+            speakAssistantResponse(
+                assistantResponse
+            );
+
+
         } catch (error) {
 
             console.error(
@@ -670,24 +845,33 @@ document.addEventListener("DOMContentLoaded", async () => {
                     error.message ||
                     "Something went wrong. Please try again.";
 
+
                 thinking.classList.remove(
                     "thinking"
                 );
+
             }
 
 
         } finally {
 
-            sending = false;
+            sending =
+                false;
 
 
             if (messageInput) {
-                messageInput.disabled = false;
+
+                messageInput.disabled =
+                    false;
+
             }
 
 
             if (sendButton) {
-                sendButton.disabled = false;
+
+                sendButton.disabled =
+                    false;
+
             }
 
 
@@ -695,7 +879,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
             setTimeout(() => {
+
                 scrollToLatest(true);
+
             }, 100);
 
         }
@@ -729,6 +915,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 event.preventDefault();
 
                 sendMessage();
+
             }
 
         }
@@ -760,23 +947,29 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/memories",
                     {
                         method: "GET",
-                        headers: await getAuthHeaders()
+                        headers:
+                            await getAuthHeaders()
                     }
                 );
 
 
             if (!response.ok) {
 
-                if (response.status === 401) {
+                if (
+                    response.status === 401
+                ) {
 
-                    window.location.href = "/";
+                    window.location.href =
+                        "/";
 
                     return;
                 }
 
+
                 throw new Error(
                     "Unable to load memories."
                 );
+
             }
 
 
@@ -788,7 +981,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 data.memories || [];
 
 
-            memoryList.innerHTML = "";
+            memoryList.innerHTML =
+                "";
 
 
             if (
@@ -806,54 +1000,69 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            memories.forEach(item => {
+            memories.forEach(
+                item => {
 
-                const card =
-                    document.createElement("div");
-
-
-                card.className =
-                    "memory-item";
+                    const card =
+                        document.createElement("div");
 
 
-                const text =
-                    document.createElement("div");
+                    card.className =
+                        "memory-item";
 
 
-                text.textContent =
-                    item.memory;
+                    const text =
+                        document.createElement("div");
 
 
-                const remove =
-                    document.createElement("button");
+                    text.textContent =
+                        item.memory;
 
 
-                remove.className =
-                    "delete-memory";
+                    const remove =
+                        document.createElement("button");
 
 
-                remove.type =
-                    "button";
+                    remove.className =
+                        "delete-memory";
 
 
-                remove.textContent =
-                    "Delete";
+                    remove.type =
+                        "button";
 
 
-                remove.addEventListener(
-                    "click",
-                    () => {
-                        deleteMemory(item.id);
-                    }
-                );
+                    remove.textContent =
+                        "Delete";
 
 
-                card.appendChild(text);
-                card.appendChild(remove);
+                    remove.addEventListener(
+                        "click",
+                        () => {
 
-                memoryList.appendChild(card);
+                            deleteMemory(
+                                item.id
+                            );
 
-            });
+                        }
+                    );
+
+
+                    card.appendChild(
+                        text
+                    );
+
+
+                    card.appendChild(
+                        remove
+                    );
+
+
+                    memoryList.appendChild(
+                        card
+                    );
+
+                }
+            );
 
 
         } catch (error) {
@@ -879,7 +1088,9 @@ document.addEventListener("DOMContentLoaded", async () => {
        DELETE MEMORY
        ===================================================== */
 
-    async function deleteMemory(id) {
+    async function deleteMemory(
+        id
+    ) {
 
         try {
 
@@ -888,7 +1099,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     `/memories/${id}`,
                     {
                         method: "DELETE",
-                        headers: await getAuthHeaders()
+                        headers:
+                            await getAuthHeaders()
                     }
                 );
 
@@ -898,6 +1110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(
                     "Unable to delete memory."
                 );
+
             }
 
 
@@ -910,6 +1123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Iraa: Delete memory error:",
                 error
             );
+
         }
 
     }
@@ -939,7 +1153,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "/memories",
                     {
                         method: "DELETE",
-                        headers: await getAuthHeaders()
+                        headers:
+                            await getAuthHeaders()
                     }
                 );
 
@@ -949,6 +1164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(
                     "Unable to clear memories."
                 );
+
             }
 
 
@@ -961,6 +1177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Iraa: Clear memories error:",
                 error
             );
+
         }
 
     }
@@ -972,19 +1189,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function openMemory() {
 
-        memoryPanel?.classList.add("open");
+        memoryPanel?.classList.add(
+            "open"
+        );
 
-        overlay?.classList.add("show");
+        overlay?.classList.add(
+            "show"
+        );
 
         loadMemories();
+
     }
 
 
     function closeMemoryPanel() {
 
-        memoryPanel?.classList.remove("open");
+        memoryPanel?.classList.remove(
+            "open"
+        );
 
-        overlay?.classList.remove("show");
+        overlay?.classList.remove(
+            "show"
+        );
+
     }
 
 
@@ -1020,7 +1247,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         "click",
         async () => {
 
-            logoutButton.disabled = true;
+            logoutButton.disabled =
+                true;
+
 
             try {
 
@@ -1035,7 +1264,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
 
 
-                window.location.href = "/";
+                window.location.href =
+                    "/";
 
 
             } catch (error) {
@@ -1045,7 +1275,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     error
                 );
 
-                logoutButton.disabled = false;
+
+                logoutButton.disabled =
+                    false;
+
             }
 
         }
@@ -1057,7 +1290,10 @@ document.addEventListener("DOMContentLoaded", async () => {
        ===================================================== */
 
     supabaseClient.auth.onAuthStateChange(
-        (event, session) => {
+        (
+            event,
+            session
+        ) => {
 
             console.log(
                 "Iraa Auth Event:",
@@ -1070,7 +1306,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 !session
             ) {
 
-                window.location.href = "/";
+                window.location.href =
+                    "/";
+
             }
 
         }
@@ -1083,10 +1321,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadConversation();
 
+
     messageInput?.focus();
+
 
     console.log(
         "Iraa: Chat system ready."
+    );
+
+
+    console.log(
+        "Iraa V1: Voice integration ready."
     );
 
 });

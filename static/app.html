@@ -23,6 +23,10 @@
 
 <div id="app" class="app">
 
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
     <header class="topbar">
 
         <div class="topbar-left">
@@ -38,12 +42,14 @@
 
         </div>
 
+
         <div class="topbar-right">
 
             <span
                 id="current-user"
                 class="current-user"
             ></span>
+
 
             <button
                 id="memory-btn"
@@ -52,6 +58,7 @@
             >
                 🧠 Memory
             </button>
+
 
             <button
                 id="logout-btn"
@@ -66,12 +73,20 @@
     </header>
 
 
+    <!-- =====================================================
+         MAIN WORKSPACE
+    ====================================================== -->
+
     <main class="workspace">
 
         <section
             id="chat-container"
             class="chat-container"
         >
+
+            <!-- =================================================
+                 WELCOME SCREEN
+            ================================================== -->
 
             <div
                 id="welcome"
@@ -93,6 +108,11 @@
 
             </div>
 
+
+            <!-- =================================================
+                 CHAT MESSAGES
+            ================================================== -->
+
             <div
                 id="messages"
                 class="messages"
@@ -103,9 +123,33 @@
     </main>
 
 
+    <!-- =====================================================
+         CHAT INPUT AREA
+    ====================================================== -->
+
     <div class="chat-input-area">
 
         <div class="chat-input">
+
+
+            <!-- =================================================
+                 V1 VOICE BUTTON
+            ================================================== -->
+
+            <button
+                id="voice-btn"
+                class="voice-button"
+                type="button"
+                title="Talk to Iraa"
+                aria-label="Talk to Iraa"
+            >
+                🎙️
+            </button>
+
+
+            <!-- =================================================
+                 TEXT INPUT
+            ================================================== -->
 
             <input
                 type="text"
@@ -113,6 +157,11 @@
                 placeholder="Message Iraa..."
                 autocomplete="off"
             >
+
+
+            <!-- =================================================
+                 SEND BUTTON
+            ================================================== -->
 
             <button
                 id="send-btn"
@@ -127,11 +176,36 @@
     </div>
 
 
+    <!-- =====================================================
+         VOICE STATUS
+         
+         This will be controlled by voice.js.
+         Examples:
+         "Listening..."
+         "Iraa is thinking..."
+         "Iraa is speaking..."
+    ====================================================== -->
+
+    <div
+        id="voice-status"
+        class="voice-status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =====================================================
+         OVERLAY
+    ====================================================== -->
+
     <div
         id="overlay"
         class="overlay"
     ></div>
 
+
+    <!-- =====================================================
+         MEMORY PANEL
+    ====================================================== -->
 
     <aside
         id="memory-panel"
@@ -141,9 +215,17 @@
         <div class="memory-header">
 
             <div>
-                <h2>🧠 Memory</h2>
-                <p>What Iraa remembers about you</p>
+
+                <h2>
+                    🧠 Memory
+                </h2>
+
+                <p>
+                    What Iraa remembers about you
+                </p>
+
             </div>
+
 
             <button
                 id="close-memory"
@@ -154,10 +236,12 @@
 
         </div>
 
+
         <div
             id="memory-list"
             class="memory-list"
         ></div>
+
 
         <button
             id="clear-memories"
@@ -172,9 +256,36 @@
 </div>
 
 
+<!-- =========================================================
+     SUPABASE
+========================================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<!-- =========================================================
+     SUPABASE CONFIG
+========================================================= -->
+
 <script src="/static/supabase-config.js?v=31"></script>
+
+
+<!-- =========================================================
+     MAIN IRAA APPLICATION
+========================================================= -->
+
 <script src="/static/app.js?v=7"></script>
+
+
+<!-- =========================================================
+     IRAA V1 VOICE ENGINE
+     
+     This file will be created/updated in the next step.
+========================================================= -->
+
+<script src="/static/voice.js?v=1"></script>
+
+
 </body>
 
 </html>
