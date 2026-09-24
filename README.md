@@ -1,6 +1,6 @@
 # Personal AI Assistant
 
-Milestone 1: local AI chat using Python, FastAPI, and the OpenAI Responses API.
+Milestone 1: local AI chat using Python, FastAPI, and the Google Gemini Responses API.
 
 ## Setup
 
