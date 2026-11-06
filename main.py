@@ -871,10 +871,8 @@ def build_system_instruction(
         + memory_text
     )
 
-
-# ============================================================
 # GEMINI TRANSIENT ERROR DETECTION
-# ============================================================
+
 
 def is_gemini_transient_error(
     error: Exception
