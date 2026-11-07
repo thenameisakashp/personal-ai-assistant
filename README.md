@@ -4,6 +4,7 @@ Milestone 1: local AI chat using Python, FastAPI, and the Google Gemini Response
 
 ## Setup
 
+
 1. Create a virtual environment:
    `python -m venv venv`
 
