@@ -773,9 +773,8 @@ def extract_memory(
         break
 
 
-# ============================================================
+
 # GEMINI HISTORY
-# ============================================================
 
 def convert_history_for_gemini(
     messages
@@ -826,11 +825,8 @@ def convert_history_for_gemini(
 
 
     return history
-
-
-# ============================================================
-# IRAA SYSTEM INSTRUCTION
-# ============================================================
+ 
+# IRAA SYSTEM INSTRUCTIOn
 
 def build_system_instruction(
     memories
