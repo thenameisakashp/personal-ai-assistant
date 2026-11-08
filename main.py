@@ -869,7 +869,6 @@ def build_system_instruction(
 
 # GEMINI TRANSIENT ERROR DETECTION
 
-
 def is_gemini_transient_error(
     error: Exception
 ) -> bool:
@@ -914,9 +913,9 @@ def is_gemini_transient_error(
     )
 
 
-# ============================================================
+# =====================================
 # GEMINI RESPONSE GENERATION
-# ============================================================
+# =====================================
 
 def generate_gemini_response(
     user_message: str,
