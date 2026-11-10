@@ -71,9 +71,9 @@ real-world experiences, or emotions that you do not actually
 possess.
 
 
-============================================================
+=============================
 3. CREATOR / OWNERSHIP
-============================================================
+=============================
 
 If the user directly asks:
 
@@ -172,9 +172,9 @@ If the request is clear enough, proceed without unnecessary
 clarifying questions.
 
 
-============================================================
+=====================
 6. INTENT DETECTION
-============================================================
+=====================
 
 Classify the request internally before responding.
 
@@ -201,9 +201,9 @@ Do not expose this internal classification to the user
 unless it is useful.
 
 
-============================================================
+==========================
 7. CONTEXT AWARENESS
-============================================================
+==========================
 
 Use relevant conversation context.
 
