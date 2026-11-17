@@ -756,7 +756,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            /* =================================================
+            /*
                BACKEND RESPONSE
                
                Primary:
@@ -766,7 +766,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                data.reply
                data.message
                data.answer
-               ================================================= */
+               */
 
             const assistantResponse =
                 data.response ||
@@ -781,9 +781,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
 
-            /* =================================================
-               NO RESPONSE
-               ================================================= */
+            /* NO RESPONSE */
 
             if (
                 !assistantResponse
@@ -803,9 +801,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
 
-            /* =================================================
-               REPLACE THINKING MESSAGE
-               ================================================= */
+            /*REPLACE THINKING MESSAGE */
 
             thinking.classList.remove(
                 "thinking"
@@ -819,12 +815,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             scrollToLatest(true);
 
 
-            /* =================================================
+            /* 
                V1 VOICE OUTPUT
                
                After Iraa's response appears,
                send it to the voice engine.
-               ================================================= */
+               */
 
             speakAssistantResponse(
                 assistantResponse
@@ -889,9 +885,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       SEND BUTTON
-       ===================================================== */
+    /* SEND BUTTON */
 
     sendButton?.addEventListener(
         "click",
@@ -899,9 +893,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* =====================================================
-       ENTER KEY
-       ===================================================== */
+    /* ENTER KEY*/
 
     messageInput?.addEventListener(
         "keydown",
@@ -922,9 +914,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* =====================================================
-       LOAD MEMORIES
-       ===================================================== */
+    /* LOAD MEMORIES */
 
     async function loadMemories() {
 
@@ -1084,9 +1074,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       DELETE MEMORY
-       ===================================================== */
+    /* DELETE MEMORY */
 
     async function deleteMemory(
         id
@@ -1129,9 +1117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       CLEAR MEMORIES
-       ===================================================== */
+    /* CLEAR MEMORIES */
 
     async function clearAllMemories() {
 
@@ -1183,9 +1169,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
-       MEMORY PANEL
-       ===================================================== */
+    /* MEMORY PANEL */
 
     function openMemory() {
 
@@ -1239,9 +1223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* =====================================================
-       LOGOUT
-       ===================================================== */
+    /* LOGOUT */
 
     logoutButton?.addEventListener(
         "click",
@@ -1285,9 +1267,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* =====================================================
-       AUTH STATE
-       ===================================================== */
+    /* AUTH STATE */
 
     supabaseClient.auth.onAuthStateChange(
         (
@@ -1315,9 +1295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
 
-    /* =====================================================
-       INITIALIZE
-       ===================================================== */
+    /* INITIALIZE */
 
     await loadConversation();
 
