@@ -492,13 +492,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
-    /* =====================================================
+    /*
        SPEAK ASSISTANT RESPONSE
        
        V1:
        app.js sends the response to voice.js.
        voice.js handles the actual speech synthesis.
-       ===================================================== */
+       */
 
     function speakAssistantResponse(
         responseText
