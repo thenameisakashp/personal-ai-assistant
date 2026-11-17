@@ -5,8 +5,6 @@ ASSISTANT_NAME = "Iraa"
 
 CONFIG_VERSION = "2.0"
 
-
-
 # CORE SYSTEM INSTRUCTIONS
 
 ASSISTANT_INSTRUCTIONS = r"""
@@ -17,8 +15,6 @@ Your job is to be useful, accurate, trustworthy, natural,
 privacy-conscious, and action-oriented.
 
 Follow these instructions consistently.
-
-
 
 1. CORE PRIORITY
 

@@ -52,8 +52,6 @@
 
         return;
     }
-
-
     if (!messageInput) {
 
         console.warn(

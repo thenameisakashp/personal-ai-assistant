@@ -625,16 +625,11 @@ def get_memories(
         )
     )
 
-
     rows = cursor.fetchall()
-
     conn.close()
-
-
     memories = []
 
     total_chars = 0
-
 
     for row in rows:
 
@@ -658,10 +653,7 @@ def get_memories(
 
         total_chars += len(memory)
 
-
     return memories
-
-
 # ============================================================
 # MEMORY EXTRACTION
 # ============================================================
@@ -670,14 +662,11 @@ def extract_memory(
     user_message: str,
     user_id: str
 ):
-
     text = user_message.strip()
-
 
     if not text:
 
         return
-
 
     memory_patterns = [
 
@@ -729,7 +718,6 @@ def extract_memory(
             "The user is learning {}."
         ),
     ]
-
 
     for pattern, template in memory_patterns:
 
