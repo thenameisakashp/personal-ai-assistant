@@ -649,14 +649,10 @@ def get_memories(
                 "created_at": row["created_at"]
             }
         )
-
-
         total_chars += len(memory)
-
     return memories
-# ============================================================
+
 # MEMORY EXTRACTION
-# ============================================================
 
 def extract_memory(
     user_message: str,
@@ -665,54 +661,44 @@ def extract_memory(
     text = user_message.strip()
 
     if not text:
-
         return
-
     memory_patterns = [
-
         # Name
         (
             r"\bmy name is ([a-zA-Z][a-zA-Z ]{1,40})",
             "The user's name is {}."
         ),
 
-        # Likes
         (
             r"\bi like ([^.!,?]+)",
             "The user likes {}."
         ),
 
-        # Favorite
         (
             r"\bmy favorite (?:thing|food|movie|song|color|game|sport)? ?is ([^.!,?]+)",
             "The user's favorite is {}."
-        ),
+        )
 
-        # Goals
         (
             r"\bi want to ([^.!,?]+)",
             "The user's goal is to {}."
         ),
 
-        # Projects
         (
             r"\bi am working on ([^.!,?]+)",
             "The user is working on {}."
         ),
 
-        # Building
         (
             r"\bi am building ([^.!,?]+)",
             "The user is building {}."
         ),
 
-        # Studying
         (
             r"\bi am studying ([^.!,?]+)",
             "The user is studying {}."
         ),
 
-        # Learning
         (
             r"\bi am learning ([^.!,?]+)",
             "The user is learning {}."
@@ -720,59 +706,42 @@ def extract_memory(
     ]
 
     for pattern, template in memory_patterns:
-
         match = re.search(
             pattern,
             text,
             re.IGNORECASE
         )
-
-
         if not match:
 
             continue
 
-
         value = match.group(1).strip()
-
-
         if len(value) < 2:
-
             continue
-
 
         memory = template.format(
             value
         )
-
 
         save_memory(
             user_id,
             memory
         )
 
-
         print(
             "MEMORY SAVED:",
             memory
         )
 
-
         break
-
-
 
 # GEMINI HISTORY
 
 def convert_history_for_gemini(
     messages
 ):
-
     history = []
-
-
     for message in messages:
-
         role = message.get(
             "role"
         )
