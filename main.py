@@ -750,24 +750,15 @@ def convert_history_for_gemini(
             "content"
         )
 
-
         if not content:
-
             continue
-
 
         if role == "assistant":
-
             gemini_role = "model"
-
         elif role == "user":
-
             gemini_role = "user"
-
         else:
-
             continue
-
 
         history.append(
             {
@@ -780,43 +771,29 @@ def convert_history_for_gemini(
             }
         )
 
-
     return history
- 
 # IRAA SYSTEM INSTRUCTIOn
-
 def build_system_instruction(
     memories
 ):
-
     memory_text = ""
 
-
     if memories:
-
         memory_lines = []
-
-
         for item in memories:
-
             memory_lines.append(
                 f"- {item['memory']}"
             )
-
 
         memory_text = (
             "\n\nKnown information about the user:\n"
             + "\n".join(memory_lines)
         )
-
-
     else:
-
         memory_text = (
             "\n\nNo long-term user memories "
             "are currently available."
         )
-
 
     return (
         assistant_config.ASSISTANT_INSTRUCTIONS
@@ -829,67 +806,44 @@ def build_system_instruction(
 def is_gemini_transient_error(
     error: Exception
 ) -> bool:
-
     error_text = str(error).lower()
 
-
     transient_keywords = [
-
         "503",
-
         "unavailable",
-
         "high demand",
-
         "429",
-
         "resource exhausted",
-
         "rate limit",
-
         "500",
-
         "502",
-
         "504",
-
         "internal server error",
-
         "deadline exceeded",
-
         "timeout",
-
         "temporarily unavailable",
 
     ]
-
 
     return any(
         keyword in error_text
         for keyword in transient_keywords
     )
 
-
-# =====================================
 # GEMINI RESPONSE GENERATION
-# =====================================
 
 def generate_gemini_response(
     user_message: str,
     conversation,
     memories
 ):
-
     gemini_history = convert_history_for_gemini(
         conversation
     )
 
-
     system_instruction = build_system_instruction(
         memories
     )
-
-
     print()
     print("--------------------------------------------")
     print("Gemini request")
@@ -910,7 +864,6 @@ def generate_gemini_response(
         len(memories)
     )
     print("--------------------------------------------")
-
 
     last_error = None
 
