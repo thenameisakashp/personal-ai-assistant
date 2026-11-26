@@ -864,35 +864,24 @@ def generate_gemini_response(
         len(memories)
     )
     print("--------------------------------------------")
-
     last_error = None
 
-
-    # ========================================================
     # MODEL LOOP
-    # ========================================================
 
     for model_index, model_name in enumerate(
         GEMINI_MODELS
     ):
-
-
-        # ====================================================
         # RETRY LOOP
-        # ====================================================
 
         for attempt in range(
             GEMINI_RETRIES
         ):
-
             try:
-
                 print(
                     f"Trying model {model_name} "
                     f"(attempt {attempt + 1}/"
                     f"{GEMINI_RETRIES})"
                 )
-
 
                 chat_session = (
                     gemini_client.chats.create(
@@ -914,13 +903,11 @@ def generate_gemini_response(
                     )
                 )
 
-
                 response = (
                     chat_session.send_message(
                         message=user_message
                     )
                 )
-
 
                 if not response:
 
@@ -928,21 +915,17 @@ def generate_gemini_response(
                         "Gemini returned an empty response."
                     )
 
-
                 text = getattr(
                     response,
                     "text",
                     None
                 )
 
-
                 if not text:
 
                     raise RuntimeError(
                         "Gemini response contained no text."
                     )
-
-
                 print()
                 print(
                     "--------------------------------------------"
@@ -958,15 +941,10 @@ def generate_gemini_response(
                     "--------------------------------------------"
                 )
 
-
                 return text.strip()
-
-
             except Exception as e:
 
                 last_error = e
-
-
                 print()
                 print(
                     "--------------------------------------------"
@@ -994,20 +972,14 @@ def generate_gemini_response(
                     "--------------------------------------------"
                 )
 
-
-                # --------------------------------------------
                 # TEMPORARY ERROR
-                # --------------------------------------------
 
                 if is_gemini_transient_error(e):
-
                     if attempt < GEMINI_RETRIES - 1:
-
                         delay = (
                             GEMINI_RETRY_BASE_DELAY
                             * (2 ** attempt)
                         )
-
 
                         print(
                             f"Temporary Gemini error. "
@@ -1015,44 +987,33 @@ def generate_gemini_response(
                             f"{delay:.1f}s..."
                         )
 
-
                         time.sleep(
                             delay
                         )
 
-
                         continue
-
-
                     print(
                         f"Retries exhausted for "
                         f"{model_name}."
                     )
-
 
                     if (
                         model_index
                         <
                         len(GEMINI_MODELS) - 1
                     ):
-
                         print(
                             "Switching to next Gemini model..."
                         )
 
-
                     break
 
-
-                # --------------------------------------------
                 # NON-TRANSIENT ERROR
-                # --------------------------------------------
+
 
                 print(
                     "Non-transient Gemini error."
                 )
-
-
                 raise
 
 
