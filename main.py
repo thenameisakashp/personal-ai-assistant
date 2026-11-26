@@ -1016,92 +1016,49 @@ def generate_gemini_response(
                 )
                 raise
 
-
-    # ========================================================
     # ALL MODELS FAILED
-    # ========================================================
 
     print()
-    print(
-        "============================================"
-    )
-    print(
-        "ALL GEMINI MODELS FAILED"
-    )
-    print(
-        "============================================"
-    )
-
+    print("============================================" )
+    print( "ALL GEMINI MODELS FAILED"  )
+    print( "============================================" )
 
     if last_error:
-
         raise last_error
-
-
     raise RuntimeError(
         "All Gemini models failed."
     )
 
-
-# ============================================================
 # CHAT ENDPOINT
-# ============================================================
 
 @app.post("/chat")
 async def chat(
     request: Request,
     data: ChatRequest
 ):
-
     user = get_current_user(
         request
     )
-
-
     user_id = str(
         user.id
     )
-
-
     user_message = (
         data.message.strip()
     )
-
-
     if not user_message:
-
         raise HTTPException(
             status_code=400,
             detail="Message cannot be empty."
         )
-
-
     print()
-    print(
-        "============================================"
-    )
-    print(
-        "IRAA CHAT"
-    )
-    print(
-        "============================================"
-    )
-    print(
-        "User ID:",
-        user_id
-    )
-    print(
-        "User:",
-        user_message
-    )
-    print(
-        "============================================"
-    )
-
-
-    # ========================================================
+    print("============================================" )
+    print("IRAA CHAT" )
+    print("============================================" )
+    print("User ID:", user_id)
+    print("User:", user_message)
+    print("============================================")
+    
     # SAVE USER MESSAGE
-    # ========================================================
 
     save_message(
         user_id,
@@ -1109,18 +1066,12 @@ async def chat(
         user_message
     )
 
-
-    # ========================================================
     # LOCAL MEMORY EXTRACTION
-    # ========================================================
-
     try:
-
         extract_memory(
             user_message,
             user_id
         )
-
     except Exception as e:
 
         print(
